@@ -1,32 +1,59 @@
 $(document).ready(function() {
   $('#onlyMalesFilter').click(function() {
     console.log('onlyMalesFilter Filter executed');
+    // простая фильтрация использует одно поле документа
+    // параметры: поле, оператор, значение
+    employeesRef.where('gender', '==', 'Male').onSnapshot(data => {
+      loadTableData(data);
+    });
   });
 
   $('#fullTimeFilter').click(function() {
     console.log('fullTimeFilter Filter executed');
+    employeesRef.where('isFullTime', '==', true).onSnapshot(data => {
+      loadTableData(data);
+    });
   });
 
   $('#olderThenFilter').click(function() {
     console.log('olderThenFilter Filter executed');
+    employeesRef.where('age', '>=', 30).onSnapshot(data => {
+      loadTableData(data);
+    });
   });
 
   $('#ageBetweenFilter').click(function() {
     console.log('ageBetweenFilter Filter executed');
+    // сложная фильтрация использует несколько методов .where(), если поле одно и то же
+    employeesRef
+      .where('age', '>=', 35)
+      .where('age', '<=', 50)
+      .onSnapshot(data => {
+        loadTableData(data);
+      });
   });
 
   $('#yearsOfExperienceFilter').click(function() {
     console.log('yearsOfExperienceFilter Filter executed');
+    // сложная фильтрация использует несколько employeesRef и .where(), если поля разные
+    employeesRef.where('gender', '==', 'Femail');
+    employeesRef
+      .where('yearsOfExperience', '>=', 5)
+      .where('yearsOfExperience', '<=', 10)
+      .onSnapshot(data => {
+        loadTableData(data);
+      });
   });
 
   $('#clearFilter').click(function() {
     console.log('clearFilter Filter executed');
+    employeesRef.get().then(data => loadTableData(data));
   });
 
   // как только что-то произойдет с коллекцией, появится событие
   db.collection('employees').onSnapshot(data => {
     console.log('something changed');
-    
+
     data.docChanges.forEach(change => {
       console.log(change.type); // может быть 'added', 'modified', 'removed'
     });
