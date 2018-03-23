@@ -55,6 +55,14 @@ $(document).ready(function() {
       .then(data => loadTableData(data));
   });
 
+  $('#searchEmployee').change(function() {
+    console.log('You entered: ', $(this).val());
+    const searchValue = $(this).val();
+    employeesRef.where('fName', '==', searchValue).onSnapshot(data => {
+      loadTableData(data);
+    });
+  });
+
   // как только что-то произойдет с коллекцией, появится событие
   db.collection('employees').onSnapshot(data => {
     console.log('something changed');
