@@ -50,6 +50,7 @@ $(document).ready(function() {
     employeesRef
       .orderBy('fName', 'desc') // сортировка
       // .orderBy('age') // сортировка, но нужно создавать индекс
+      .limit(1) // показать только одного
       .get()
       .then(data => loadTableData(data));
   });
