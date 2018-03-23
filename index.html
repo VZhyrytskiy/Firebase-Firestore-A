@@ -14,6 +14,24 @@
         <!-- custom styles -->
         <link rel="stylesheet" href="styles.css" >
 
+        <!-- firebase related files -->
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-firestore.js"></script>
+
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDARemZMxTIzCs-QhtCKyouAZz9b2JtJVE",
+            authDomain: "employees-4b1dd.firebaseapp.com",
+            databaseURL: "https://employees-4b1dd.firebaseio.com",
+            projectId: "employees-4b1dd",
+            storageBucket: "employees-4b1dd.appspot.com",
+            messagingSenderId: "411369801132"
+          };
+          firebase.initializeApp(config);
+        </script>
+
         <!-- initialize script -->
         <script src="initialize.js"></script>
         <!-- filtering scripts -->
