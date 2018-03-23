@@ -1,34 +1,4 @@
 $(document).ready(function() {
-  loadData();
-
-  function loadData() {
-    employeesRef.get().then(data => loadTableData(data));
-  }
-
-  function loadTableData(data) {
-    let tableRow = '';
-
-    data.forEach(doc => {
-      const document = doc.data();
-      tableRow += `
-                <tr>
-                    <td class="fname">${document.fName}</td>
-                    <td class="lname">${document.lName}</td>
-                    <td class="email">${document.email}</td>
-                    <td class="age">${document.age}</td>
-                    <td class="gender">${document.gender}</td>
-                    <td class="yearsofexperience">${
-                      document.yearsOfExperience
-                    }</td>
-                    <td class="isfulltime">${document.isFullTime}</td>
-                    <td class="editEmployee"><i class="fa fa-pencil" aria-hidden="true" style="color: green;"></i></td>
-                    <td class="deleteEmployee"><i class="fa fa-trash" aria-hidden="true" style="color: red;"></i></td>
-                </tr>
-                `;
-    });
-    $('tbody.tbodyData').html(tableRow);
-  }
-
   //get all the data on app startup
   $('#createEmployee').click(function() {
     $('.employeeForm').css('display', 'block');
@@ -70,7 +40,6 @@ $(document).ready(function() {
             .delay(2500)
             .fadeOut('slow');
           $('.employeeForm').css('display', 'none');
-          loadData();
         })
         .catch(err => {
           console.log(err);
@@ -110,7 +79,6 @@ $(document).ready(function() {
             .delay(2500)
             .fadeOut('slow');
           $('.employeeForm').css('display', 'none');
-          loadData();
         })
         .catch(err => {
           $('#operationStatus')
@@ -204,7 +172,6 @@ $(document).ready(function() {
           )
           .delay(2500)
           .fadeOut('slow');
-        loadData();
       })
       .catch(err => {
         $('#operationStatus')
