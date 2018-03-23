@@ -113,7 +113,6 @@ $(document).ready(function() {
           loadData();
         })
         .catch(err => {
-          console.log(err);
           $('#operationStatus')
             .html(
               '<div class="alert alert-danger"><strong>Error!</strong> Employee was not updated!</div>'
@@ -190,6 +189,31 @@ $(document).ready(function() {
       .closest('tr')
       .find('.lname')
       .text(); //Last Name
+
+    // Удалим пользователя, используя его имя как идентификатор документа
+    // Пример: Anna Borisova -> A.Borisova
+    const docId = `${fName[0]}.${lName}`;
+    db
+      .collection('employees')
+      .doc(docId)
+      .delete()
+      .then(docRef => {
+        $('#operationStatus')
+          .html(
+            '<div class="alert alert-success"><strong>Success!</strong> Employee was deleted!</div>'
+          )
+          .delay(2500)
+          .fadeOut('slow');
+        loadData();
+      })
+      .catch(err => {
+        $('#operationStatus')
+          .html(
+            '<div class="alert alert-danger"><strong>Error!</strong> Employee was not deleted!</div>'
+          )
+          .delay(2500)
+          .fadeOut('slow');
+      });
   });
 
   $('#searchEmployee').change(function() {
