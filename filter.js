@@ -47,7 +47,11 @@ $(document).ready(function() {
 
   $('#clearFilter').click(function() {
     console.log('clearFilter Filter executed');
-    employeesRef.get().then(data => loadTableData(data));
+    employeesRef
+      .orderBy('fName', 'desc') // сортировка
+      // .orderBy('age') // сортировка, но нужно создавать индекс
+      .get()
+      .then(data => loadTableData(data));
   });
 
   // как только что-то произойдет с коллекцией, появится событие
