@@ -82,6 +82,45 @@ $(document).ready(function() {
             .fadeOut('slow');
         });
     } else {
+      // Изменим пользователя, используя его имя как идентификатор документа
+      // Пример: Anna Borisova -> A.Borisova
+      const docId = `${fname[0]}.${lname}`;
+      db
+        .collection('employees')
+        .doc(docId)
+        .set(
+          {
+            fName: fname,
+            lName: lname,
+            email,
+            age,
+            gender,
+            yearsOfExperience,
+            isFullTime: isfulltime
+          },
+          {
+            merge: true // чтобы не создавать новый документ, а обновить текущий
+          }
+        )
+        .then(docRef => {
+          $('#operationStatus')
+            .html(
+              '<div class="alert alert-success"><strong>Success!</strong> Employee was updated!</div>'
+            )
+            .delay(2500)
+            .fadeOut('slow');
+          $('.employeeForm').css('display', 'none');
+          loadData();
+        })
+        .catch(err => {
+          console.log(err);
+          $('#operationStatus')
+            .html(
+              '<div class="alert alert-danger"><strong>Error!</strong> Employee was not updated!</div>'
+            )
+            .delay(2500)
+            .fadeOut('slow');
+        });
     }
   });
 
